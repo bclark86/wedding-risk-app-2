@@ -6,3 +6,5 @@
   padding: 10px;
   vertical-align: bottom;
 }
+
+html, body { height: 100%; }

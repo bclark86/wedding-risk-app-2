@@ -125,10 +125,10 @@ plot_recommendation <- function(simulation_obj) {
         guides(fill = FALSE) +
         geom_hline(yintercept = 0, size = .5, colour = "#333333") +
         # add dashed line for risk tolernace
-        geom_hline(yintercept = risk_tolerance, linetype = "dashed")
+        geom_hline(yintercept = simulation_obj$risk_tolerance, linetype = "dashed")
     
     # if risk tolerance is exceeded, color the Invite Less bar 
-    if (mean(simulation_tbl$risk < 0) >= risk_tolerance) {
+    if (mean(simulation_tbl$risk < 0) >= simulation_obj$risk_tolerance) {
         p <- p + 
             scale_fill_manual(values = c(cb_palette[1], cb_palette[7]))
     } else {
