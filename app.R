@@ -24,8 +24,8 @@ source_python("py/simulator.py")
 library(tidyverse)
 
 # plotting functions
-library(plotly)
 source("R/plot.R")
+source("R/app_functions.R")
 
 config <- config::get()
 
@@ -46,7 +46,7 @@ ui <- tagList(
 ) 
 
 # SERVER ----
-server <- function(input, output) {
+server <- function(input, output, session) {
 
   # 1.0 SIMULATION ----
   
@@ -92,8 +92,24 @@ server <- function(input, output) {
     
   })
   
-  
-  
+  observeEvent(input$guest_prob, {
+    
+  peak_value_check = between(
+    input$peak, input$guest_prob[1], input$guest_prob[2]
+    )
+    
+    updateNumericInput(session, "peak", min = input$guest_prob[1])
+    updateNumericInput(session, "peak", max = input$guest_prob[2])
+    
+    if (!peak_value_check) {
+      updateNumericInput(
+        session, "peak",
+        value = mean(input$guest_prob) %>% ceiling()
+      )
+    }
+  })  
+
+
   # 2.0 RENDER WEBSITE ----
   output$website <- renderUI({
     
@@ -102,7 +118,7 @@ server <- function(input, output) {
       # 1. SETTINGS ----
       
       # 1.1 Title ----
-      title = "Wedding Budget Risk Model",
+      title = "Wedding Budget Risk Asessment",
       # 1.2 Behavior ----
       fluid = TRUE, 
       collapsible = TRUE,
@@ -113,8 +129,10 @@ server <- function(input, output) {
       # 2.1 Analyzer ----
       tabPanel(
         title = "Analyzer",
-        # 2.1.1 Quote ----
+        icon = icon("tachometer"),
+        # 2.1.1 Header Row ----
         fluidRow(
+          # 2.1.1.1 Quote ----
           column(
             width = 3,
             div(
@@ -125,8 +143,36 @@ server <- function(input, output) {
               )
             )
           ),
+          # 2.1.1.2 Summary Values ----
           column(
-            width = 9
+            width = 9,
+            div(
+              class = "container",
+              #style = "border: 1px solid #424242",
+              fluidRow(
+                column(
+                  width = 3,
+                  p(style = "text-align: left;",
+                    "Expected Value:", simulation$overall_expectation %>% scales::dollar(accuracy = 1))  %>% tags$strong()
+                ),
+                column(
+                  width = 3,
+                  p(style = "text-align: center;",
+                  "Upside Potential:",
+                  simulation$financial_upside$upside_payoff %>% scales::dollar(accuracy = 1),
+                  str_glue("({simulation$financial_upside$upside_probability %>% scales::percent()})")
+                  ) %>% tags$strong()
+                ),
+                column(
+                  width = 3,
+                  p(style = "text-align: right;",
+                    "Downside Risk:",
+                    simulation$financial_risk$downside_payoff %>% scales::dollar(accuracy = 1),
+                    str_glue("({simulation$financial_risk$downside_probability %>% scales::percent()})")
+                  )  %>% tags$strong()
+                )
+              )
+            )
           )
         ),
         # 2.1.2 User Inputs ----
@@ -210,17 +256,18 @@ server <- function(input, output) {
                     cellArgs = list(style = "padding-right: 10px;"),
                     sliderInput(
                       "guest_prob", "Range (%):",
-                      min = 0, max = 100, value = c(60, 85), step = 5, post  = " %"
+                      min = 0, max = 100,
+                      value = c(60, 85), step = 5, post = " %"
                     ),
                     numericInput(
-                      "peak", "Peak (%):", 75, min = 0, max = 100, 
+                      "peak", "Peak (%):", value = 75, min = 0, max = 100, 
                       step = 5
                     )
                   )
                 )
               ),
               div(
-                style = "vertical-align: middle;",
+                style = "vertical-align: bottom;",
                 id = "input_buttons",
                 actionButton(
                   inputId = "analyze",
@@ -230,7 +277,7 @@ server <- function(input, output) {
                 div(
                   class = "pull-right",
                   actionBttn(
-                    inputId = "Id103",
+                    inputId = "help",
                     label = NULL,
                     style = "material-circle", 
                     color = "default",
@@ -289,6 +336,7 @@ server <- function(input, output) {
       # 2.2 About ----
       tabPanel(
         title = "Learn More",
+        icon = icon("book"),
         div(
           class = "container",
           id = "header",
