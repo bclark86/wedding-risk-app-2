@@ -79,7 +79,7 @@ server <- function(input, output, session) {
       )
     
     output$risk_chart <- renderPlot(
-      plot_risk(simulation$simulation_data, simulation$variable_guest_cost)
+      plot_risk(simulation_obj = simulation)
       )
     
     output$cost_chart <- renderPlot(
@@ -144,35 +144,11 @@ server <- function(input, output, session) {
             )
           ),
           # 2.1.1.2 Summary Values ----
+          # get rid of and include in the chart titles
+          # include simple sentence that explains what is happening here
+          # use function with placeholders. 
           column(
-            width = 9,
-            div(
-              class = "container",
-              #style = "border: 1px solid #424242",
-              fluidRow(
-                column(
-                  width = 3,
-                  p(style = "text-align: left;",
-                    "Expected Value:", simulation$overall_expectation %>% scales::dollar(accuracy = 1))  %>% tags$strong()
-                ),
-                column(
-                  width = 3,
-                  p(style = "text-align: center;",
-                  "Upside Potential:",
-                  simulation$financial_upside$upside_payoff %>% scales::dollar(accuracy = 1),
-                  str_glue("({simulation$financial_upside$upside_probability %>% scales::percent()})")
-                  ) %>% tags$strong()
-                ),
-                column(
-                  width = 3,
-                  p(style = "text-align: right;",
-                    "Downside Risk:",
-                    simulation$financial_risk$downside_payoff %>% scales::dollar(accuracy = 1),
-                    str_glue("({simulation$financial_risk$downside_probability %>% scales::percent()})")
-                  )  %>% tags$strong()
-                )
-              )
-            )
+            width = 9
           )
         ),
         # 2.1.2 User Inputs ----
@@ -333,7 +309,7 @@ server <- function(input, output, session) {
         )
         
       ),
-      # 2.2 About ----
+      # 2.2 Learn More ----
       tabPanel(
         title = "Learn More",
         icon = icon("book"),
@@ -349,7 +325,16 @@ server <- function(input, output, session) {
         ),
         div(
           class = "container",
-          p("Placeholder for rmarkdown with the overview of how it works.")
+          panel_card(
+            icon_str = "file-code-o",
+            h2("Goal"),
+            p("This is a really long sentence to see if the card expands.")
+          ),
+          panel_card(
+            icon_str = "file-code-o",
+            h2("Goal"),
+            p("This is a really long sentence to see if the card expands.")
+          )
         )
       )
     )
