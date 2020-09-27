@@ -334,7 +334,6 @@ server <- function(input, output, session) {
             )
           )
         )
-        
       ),
       # 2.2 Learn More ----
       tabPanel(

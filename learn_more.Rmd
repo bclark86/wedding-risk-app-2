@@ -23,7 +23,8 @@ To facilitate these learning goals, the main updates from the first version incl
 
 1. Development of the app in full `shiny` vs. `flexdashboard`
 2. Refactoring original `R` functions to `python` custom class run via `reticulate`
-3. Moving the deployment to `AWS` via a `docker` container
+3. Changing the uniform distribution probability range to a triangular one (min, max, mode)
+4. Moving the deployment to `AWS` via a `docker` container
 
 # Source Code
 
