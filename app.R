@@ -156,7 +156,8 @@ server <- function(input, output, session) {
           column(
             width = 3,
             div(
-              style = "background-color: #FAFAFA; padding: 10px; border: 1px solid #424242",
+              style = str_c("background-color: #FAFAFA;",
+                            "padding: 10px; border: 1px solid #424242"),
               div(
                 style = "margin-top: -20px;",
                 h2("Budget Risk Engine", style = "text-align: center;")
@@ -318,22 +319,65 @@ server <- function(input, output, session) {
           id = "header",
           h1(class = "page-header", "Wedding Budget Risk Analyzer",
              tags$small("by Clarklytics")),
-          p(class = "lead",
-            "This is version 2.0 of the original app created using flexdashboard:", 
+          p(class = "lead", 
+            str_c("This is version 2.0 of the original",
+                  "app created using flexdashboard:"), 
             a(href = "https://github.com/bclark86/WeddingRiskModel",
               target = "_blank", "Wedding Risk Modeling App"))
         ),
         div(
           class = "container",
-          panel_card(
-            icon_str = "file-code-o",
-            h2("Goal"),
-            p("This is a really long sentence to see if the card expands.")
-          ),
-          panel_card(
-            icon_str = "file-code-o",
-            h2("Goal"),
-            p("This is a really long sentence to see if the card expands.")
+          div(
+            class = "row",
+            panel_card(
+              icon_str = "lightbulb-o",
+              h2("Goals"),
+              p(str_c("Goals in mind for version 2.0 of this project:")),
+              tags$ol(
+                tags$li(
+                  p("Reinforce the learning from", 
+                    "DS4B 202A-R: Shiny Developer with AWS" %>% 
+                      a(href = str_c(
+                        "https://university.business-science.io/p/",
+                        "expert-shiny-developer-with-aws-course-ds4b-202a-r/"
+                      )
+                      ), 
+                    "with a follow-up project")
+                ),
+                tags$li(
+                  p("Learn how to bring the R & python environments together ",
+                    "into a shiny app running in a docker container")
+                ),
+                tags$li(
+                  p("Continue to develop my intuition for object-oriented ", 
+                    "programming and class development in python")
+                )
+              )
+            ),
+            panel_card(
+              icon_str = "edit",
+              h2("Updates"),
+              p(str_c("There are a few key updates from the original:")),
+              tags$ol(
+                tags$li(
+                  p("Rebuild app in complete Shiny vs. flexdashboard")
+                ),
+                tags$li(
+                  p("Refactored entire simulation into python class ",
+                    "called through", tags$code("reticulate") %>% 
+                      a(href = "https://rstudio.github.io/reticulate/")
+                  )
+                ),
+                tags$li(
+                  p("Deployment using docker and AWS EC2 instance")
+                )
+              )
+            ),
+            panel_card(
+              icon_str = "file-code-o",
+              h2("Source Code"),
+              p("This is a really long sentence to see if the card expands.")
+            )
           )
         )
       )

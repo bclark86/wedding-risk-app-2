@@ -2,6 +2,7 @@ panel_card <- function(icon_str, ...) {
     
     div(
         class = "col-sm-4",
+        style = "display: flex; flex-direction: column;",
         div(
             class = "panel panel-default",
             div(

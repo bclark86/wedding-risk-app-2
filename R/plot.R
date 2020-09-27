@@ -104,7 +104,7 @@ plot_risk <- function(simulation_obj) {
                        color = "white") +
         geom_hline(yintercept = 0, size = .5, colour = "#333333") +
         scale_fill_manual(values = c(cb_palette[4], cb_palette[5], cb_palette[7])) +
-        labs(title = str_glue("Total Budget Average Risk: {expectation}"),
+        labs(title = str_glue("Total Budget Conditional Risk: {expectation}"),
              subtitle = str_glue(
                  "95% Confidence Estimate: ",
                  "{ci_int_risk[1] %>% scales::dollar(accuracy = 1)} - ",
