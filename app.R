@@ -25,7 +25,7 @@ library(tidyverse)
 
 # plotting functions
 source("R/plot.R")
-source("R/app_functions.R")
+#source("R/app_functions.R")
 
 config <- config::get()
 
@@ -108,6 +108,32 @@ server <- function(input, output, session) {
       )
     }
   })  
+  
+  # 1.3 Help ----
+  observeEvent(input$help, {
+    modalDialog(
+      title = "Input Definitions",
+      size = "m",
+      easyClose = TRUE,
+      h3("Total Budget"),
+      p("What is the total available budget for the wedding?"),
+      h3("Risk Tolerance %"),
+      p("What is the largest chance of going over budget you can tolerate?"),
+      h3("Guest Base Cost"),
+      p("What is the fixed cost amount?"),
+      h3("Guest Base Count"),
+      p("How many guests are including in the base cost amount?"),
+      h3("Variable Guest Cost"),
+      p("What is cost per additional guest beyond the base amount?"),
+      h3("Total Guests Invited"),
+      p("How many guests are you inviting?"),
+      h3("Guest Probability to Attend"),
+      p("What is the range for the probability that each guest RSVPs yes?",
+        "What is the most likely (peak) probability that each guest RSVPs yes?"
+      ),
+      footer = modalButton("Exit")
+    ) %>% showModal()
+  })
 
 
   # 2.0 RENDER WEBSITE ----
@@ -314,72 +340,7 @@ server <- function(input, output, session) {
       tabPanel(
         title = "Learn More",
         icon = icon("book"),
-        div(
-          class = "container",
-          id = "header",
-          h1(class = "page-header", "Wedding Budget Risk Analyzer",
-             tags$small("by Clarklytics")),
-          p(class = "lead", 
-            str_c("This is version 2.0 of the original",
-                  "app created using flexdashboard:"), 
-            a(href = "https://github.com/bclark86/WeddingRiskModel",
-              target = "_blank", "Wedding Risk Modeling App"))
-        ),
-        div(
-          class = "container",
-          div(
-            class = "row",
-            panel_card(
-              icon_str = "lightbulb-o",
-              h2("Goals"),
-              p(str_c("Goals in mind for version 2.0 of this project:")),
-              tags$ol(
-                tags$li(
-                  p("Reinforce the learning from", 
-                    "DS4B 202A-R: Shiny Developer with AWS" %>% 
-                      a(href = str_c(
-                        "https://university.business-science.io/p/",
-                        "expert-shiny-developer-with-aws-course-ds4b-202a-r/"
-                      )
-                      ), 
-                    "with a follow-up project")
-                ),
-                tags$li(
-                  p("Learn how to bring the R & python environments together ",
-                    "into a shiny app running in a docker container")
-                ),
-                tags$li(
-                  p("Continue to develop my intuition for object-oriented ", 
-                    "programming and class development in python")
-                )
-              )
-            ),
-            panel_card(
-              icon_str = "edit",
-              h2("Updates"),
-              p(str_c("There are a few key updates from the original:")),
-              tags$ol(
-                tags$li(
-                  p("Rebuild app in complete Shiny vs. flexdashboard")
-                ),
-                tags$li(
-                  p("Refactored entire simulation into python class ",
-                    "called through", tags$code("reticulate") %>% 
-                      a(href = "https://rstudio.github.io/reticulate/")
-                  )
-                ),
-                tags$li(
-                  p("Deployment using docker and AWS EC2 instance")
-                )
-              )
-            ),
-            panel_card(
-              icon_str = "file-code-o",
-              h2("Source Code"),
-              p("This is a really long sentence to see if the card expands.")
-            )
-          )
-        )
+        includeHTML("learn_more.html")
       )
     )
   })
