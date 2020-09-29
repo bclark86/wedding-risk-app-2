@@ -25,9 +25,7 @@ library(tidyverse)
 
 # plotting functions
 source("R/plot.R")
-#source("R/app_functions.R")
 
-config <- config::get()
 
 # UI ----
 ui <- tagList(

@@ -1,6 +1,0 @@
-default:
-  app_dir: app
-  python_dir: py
-  
-  app:
-    theme: cosmo
