@@ -34,8 +34,7 @@ ui <- tagList(
   
   # CSS ----
   tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = shinytheme("cosmo")),
-    tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
+    tags$link(rel = "stylesheet", type = "text/css", href = shinytheme("cosmo"))
   ),
   
   # JS ----
