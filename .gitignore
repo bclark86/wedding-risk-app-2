@@ -4,3 +4,6 @@
 .Ruserdata
 .idea/
 .ipynb_checkpoints/
+/renv
+.DS_Store
+.Rprofile
