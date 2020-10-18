@@ -1,0 +1,31 @@
+---
+title: "Wedding Budget Risk Analyzer"
+author: "Clarklytics"
+output: 
+  html_document:
+    theme: cosmo
+---
+
+# Goals
+
+This is the second iteration of a [Wedding Budget Risk Model](https://github.com/bclark86/WeddingRiskModel) app I developed while planning a wedding in 2019. 
+
+The purpose of version 2.0 is to:
+
+1. Reinforce learnings from [DS4B 202A-R: Shiny Developer with AWS](https://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/)
+2. Learn how to bring R & python environments together into a shiny app running in a docker container on AWS 
+3. Continue to develop my intuition for object-oriented programming and class development in python (R is generally my preferred language)
+
+
+# Updates
+
+To facilitate these learning goals, the main updates from the first version include:
+
+1. Development of the app in full `shiny` vs. `flexdashboard`
+2. Refactoring original `R` functions to `python` custom class run via `reticulate`
+3. Changing the uniform distribution probability range to a triangular one (min, max, mode)
+4. Moving the deployment to `AWS` via a `docker` container
+
+# Source Code
+
+Source code for this project can be found here. 
