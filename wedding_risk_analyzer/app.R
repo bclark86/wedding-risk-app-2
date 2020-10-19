@@ -17,7 +17,7 @@ library(config)
 
 # python
 library(reticulate)
-use_miniconda("wedding_risk", required = TRUE)
+use_condaenv("wedding_risk", required = TRUE)
 source_python("py/simulator.py")
 
 # core
