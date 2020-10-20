@@ -39,8 +39,10 @@ RUN echo "source activate $(head -1 /tmp/environment.yml | cut -d' ' -f2)" > ~/.
 ENV PATH /opt/conda/envs/$(head -1 /tmp/environment.yml | cut -d' ' -f2)/bin:$PATH
 
 # copy necessary files
-## app folder
-COPY /wedding_risk_analyzer ./app
+COPY /py ./app
+COPY /R ./app
+COPY learn_more.html ./app
+COPY app.R ./app
 ## renv.lock file
 COPY renv.lock ./renv.lock
 
