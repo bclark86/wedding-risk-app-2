@@ -12,9 +12,6 @@ library(shinyWidgets)
 library(shinythemes)
 library(shinyjs)
 
-# utilities
-library(config)
-
 # python
 library(reticulate)
 use_condaenv("py3.8", required = TRUE)
